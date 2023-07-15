@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+    height:calc(100vh - 178px);
+    width: 100%;
+    object-fit: cover;
+    }
+  </style>
+  <title>Geocoding</title>
+</head>
+<body>
+  <div>
+    <h1>Geocoding</h1>
+    <form id="locationForm">
+      <input type="text" id="locationInput" placeholder="Enter location">
+      <button type="submit">Submit</button>
+    </form>
+    <p id="coordinates"></p>
+  </div>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    var map = L.map('map').setView([0, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    var marker;
+
+    function geocodeLocation(location) {
+      var apiUrl = 'https://nominatim.openstreetmap.org/search';
+      $.getJSON(apiUrl, {
+        q: location,
+        format: 'json',
+        limit: 1
+      })
+      .done(function(data) {
+        if (data.length > 0) {
+          var latitude = parseFloat(data[0].lat);
+          var longitude = parseFloat(data[0].lon);
+          if (marker) {
+            map.removeLayer(marker);
+          }
+          marker = L.marker([latitude, longitude]).addTo(map);
+          map.setView([latitude, longitude], 13);
+          document.getElementById('coordinates').textContent = 'Latitude: ' + latitude + ', Longitude: ' + longitude;
+          console.log('Latitude:', latitude);
+          console.log('Longitude:', longitude);
+          
+          // Send latitude and longitude to the server
+          sendCoordinatesToServer(latitude, longitude);
+        } else {
+          console.log('Location not found');
+        }
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.log('Error occurred while geocoding:', errorThrown);
+      });
+    }
+
+    function sendCoordinatesToServer(latitude, longitude) {
+      $.ajax({
+        url: '/coordinates',
+        type: 'POST',
+        data: JSON.stringify({ latitude, longitude }),
+        contentType: 'application/json',
+        success: function(response) {
+          console.log('Coordinates sent to the server');
+        },
+        error: function(error) {
+          console.log('Error occurred while sending coordinates to the server:', error);
+        }
+      });
+    }
+
+    map.on('click', function(e) {
+      var latitude = e.latlng.lat;
+      var longitude = e.latlng.lng;
+      if (marker) {
+        map.removeLayer(marker);
+      }
+      marker = L.marker([latitude, longitude]).addTo(map);
+      document.getElementById('coordinates').textContent = 'Latitude: ' + latitude.toFixed(6) + ', Longitude: ' + longitude.toFixed(6);
+      console.log('Latitude:', latitude);
+      console.log('Longitude:', longitude);
+      
+      // Send latitude and longitude to the server
+      sendCoordinatesToServer(latitude, longitude);
+    });
+
+    $(document).ready(function() {
+      $('#locationForm').submit(function(event) {
+        event.preventDefault();
+        var location = $('#locationInput').val();
+        geocodeLocation(location);
+      });
+    });
+  </script>
+</body>
+</html>
