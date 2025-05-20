@@ -299,4 +299,4 @@ function reverseWords(str) {
    return resut.join(" ");
 }
 
-console.log(reverseWords('  double  spaced  words  '));
+// console.log(reverseWords('  double  spaced  words  '));
