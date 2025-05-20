@@ -265,14 +265,38 @@
 // }
 
 
-function validatePIN (pin) {
-  const digit=pin.split("").map(Number)
-  console.log(digit)
-  if (digit.includes(NaN) || digit.length!==6 & digit.length!==4){
-    console.log(false)
-  }else{
-    console.log(true)
-  }
+// function validatePIN (pin) {
+//   const digit=pin.split("").map(Number)
+//   console.log(digit)
+//   if (digit.includes(NaN) || digit.length!==6 & digit.length!==4){
+//     console.log(false)
+//   }else{
+//     console.log(true)
+//   }
 
+// }
+// validatePIN("123")
+
+
+//Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained.
+
+// Examples
+// "This is an example!" ==> "sihT si na !elpmaxe"
+// "double  spaces"      ==> "elbuod  secaps"
+function reverseWords(str) {
+  // Go for it
+  let words=str.split(" ")
+  let resut=[]
+  for(let i=0;i<words.length;i++){
+    let word=words[i]
+    let reversestr=''
+    for(let j=word.length-1;j>=0;j--){
+      reversestr+=word[j]
+      
+    }
+    resut.push(reversestr)
+  }
+   return resut.join(" ");
 }
-validatePIN("123")
+
+console.log(reverseWords('  double  spaced  words  '));
