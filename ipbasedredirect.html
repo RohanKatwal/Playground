@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaxiToy EU</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        .banner {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+        .banner img {
+            width: 100%;
+            height: auto;
+        }
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .support {
+            font-size: 16px;
+        }
+        .support a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .support a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="https://via.placeholder.com/800x200?text=MaxiToy+Logo" alt="MaxiToy Logo">
+    </div>
+    <div class="title">MAXI</div>
+    <div class="message">
+        Ooops, it seems we couldn't determine your country, please try to select it from the list or send us an email to <a href="mailto:support@maxitoy.eu">support@maxitoy.eu</a>:
+    </div>
+    <select id="countrySelect" onchange="redirectToStore()">
+        <option value="" disabled selected>Select a country</option>
+    </select>
+
+    <script>
+        // Country-to-URL mapping (can be extended with new countries)
+        const countryMap = {
+            'Nepal': 'https://maxiigrace.si',
+            'Croatia': 'https://maxiigracke.hr',
+            'Czech Republic': 'https://hrackymaxi.cz',
+            'Romania': 'https://maxijucarii.ro',
+            'Poland': 'https://maxizabawki.pl',
+            'Hungary': 'https://maxijatekok.hu',
+            'Slovakia': 'https://hrackymaxi.sk',
+            'Bulgaria': 'https://maxiigrachki.bg'
+        };
+
+        // Populate dropdown with countries
+        const select = document.getElementById('countrySelect');
+        Object.keys(countryMap).forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            select.appendChild(option);
+        });
+
+        // Redirect function for dropdown selection
+        function redirectToStore() {
+            const selectedCountry = select.value;
+            if (selectedCountry && countryMap[selectedCountry]) {
+                window.location.href = countryMap[selectedCountry];
+            }
+        }
+
+        // Fetch country based on IP using a free geolocation API
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country_name;
+                if (countryMap[country]) {
+                    window.location.href = countryMap[country];
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching IP location:', error);
+                // Fallback to dropdown if API fails
+            });
+    </script>
+</body>
+</html>
