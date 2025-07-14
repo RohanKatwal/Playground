@@ -27,7 +27,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <header className="bg-slate-900 text-red-400 text-center p-4">
+          <h1>Createing the rohan Next App</h1>
+        </header>
         {children}
+        <footer className="bg-slate-900 text-center p-4">
+          Rohan Code @copyright 
+        </footer>
       </body>
     </html>
   );
