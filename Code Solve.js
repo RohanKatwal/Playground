@@ -337,29 +337,105 @@
 // Jaden-Cased:     "How Can Mirrors Be Real If Our Eyes Aren't Real"
 
 /*
-We want to be able to call 'toJadenCase()' directly on a string like so:
+Q. We want to be able to call 'toJadenCase()' directly on a string like so:
 'most trees are blue'.toJadenCase(); // returns 'Most Trees Are Blue'
 For that, we need to add a method to the String prototype:
 */
 
-Object.defineProperty(
-  String.prototype,
-  'toJadenCase',
-  { 
-    value :function toJadenCase() {
-     let words=this.split(' ');
-     for(let i=0;i<words.length;i++){
-        if(words[i].length>0){
-          words[i]=words[i][0].toUpperCase()+words[i].slice(1)//words[i][0] gets the first letter of the word and capitalize
-          //words[i].slice(1) gets the rest of the word (from index 1 to end)
-        }
-    }
-    return words.join(' ') //["Hello", "World"] becomes "Hello World".
-   }
-  }
-);
+// Object.defineProperty(
+//   String.prototype,
+//   'toJadenCase',
+//   { 
+//     value :function toJadenCase() {
+//      let words=this.split(' ');
+//      for(let i=0;i<words.length;i++){
+//         if(words[i].length>0){
+//           words[i]=words[i][0].toUpperCase()+words[i].slice(1)//words[i][0] gets the first letter of the word and capitalize
+//           //words[i].slice(1) gets the rest of the word (from index 1 to end)
+//         }
+//     }
+//     return words.join(' ') //["Hello", "World"] becomes "Hello World".
+//    }
+//   }
+// );
 
-console.log("most trees are blue".toJadenCase());
-// Output: "Most Trees Are Blue"
+// console.log("most trees are blue".toJadenCase());
+// // Output: "Most Trees Are Blue"
+
+
+// Q. Grade book
+// Complete the function so that it finds the average of the three scores passed to it and returns the letter value associated with that grade.
+
+// Numerical Score	Letter Grade
+// 90 <= score <= 100	'A'
+// 80 <= score < 90	'B'
+// 70 <= score < 80	'C'
+// 60 <= score < 70	'D'
+// 0 <= score < 60	'F'
+// Tested values are all between 0 and 100. Theres is no need to check for negative values or values greater than 100.
+
+
+
+// function getGrade(score1, score2, score3) {
+ 
+//   const average = (score1 + score2 + score3) / 3;
+
+//   if (average >= 90) {
+//     return 'A';
+//   } else if (average >= 80) {
+//     return 'B';
+//   } else if (average >= 70) {
+//     return 'C';
+//   } else if (average >= 60) {
+//     return 'D';
+//   } else {
+//     return 'F';
+//   }
+// }
+
+
+// Q. Take 2 strings s1 and s2 including only letters from a to z. Return a new sorted string (alphabetical ascending), the longest possible, containing distinct letters - each taken only once - coming from s1 or s2.
+
+// Examples:
+// a = "xyaabbbccccdefww"
+// b = "xxxxyyyyabklmopq"
+// longest(a, b) -> "abcdefklmopqwxy"
+
+// a = "abcdefghijklmnopqrstuvwxyz"
+// longest(a, a) -> "abcdefghijklmnopqrstuvwxyz"
+
+function longest(s1, s2) {
+  let combined=s1+s2;
+  let unique='';
+  
+  for(let i=0;i<combined.length;i++){
+    let exists=false;
+    
+    for(let j=0;j<unique.length; j++){
+      if(combined[i]===unique[j]){
+        exists=true;
+        break;
+      }
+    }
+    if(!exists){
+      unique+=combined[i]
+    }
+  }
+  let arr=unique.split('')
+  for (i=0;i<arr.length;i++){
+    for(j=i+1;j<arr.length;j++){
+      if(arr[i]>arr[j]){
+        let temp=arr[i]
+        arr[i]=arr[j]
+        arr[j]=temp
+      }
+    }
+  }
+  return arr.join('')
+}
+
+console.log(longest("xyaabbbccccdefww", "xxxxyyyyabklmopq")); 
+// → "abcdefklmopqwxy"
+
 
 
