@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Books</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    form { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Book List</h1>
+  <ul>
+    <% books.forEach(book => { %>
+      <li><strong><%= book.title %></strong> by <%= book.author %></li>
+    <% }) %>
+  </ul>
+
+  <h2>Add a Book</h2>
+  <form method="POST" action="/add">
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="author" placeholder="Author" required>
+    <button type="submit">Add</button>
+  </form>
+</body>
+</html>

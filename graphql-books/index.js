@@ -46,3 +46,36 @@ const server = new ApolloServer({ typeDefs, resolvers });
 server.listen().then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
+
+
+// Get all books
+// graphql
+// Copy
+// Edit
+// query {
+//   books {
+//     id
+//     title
+//     author
+//   }
+// }
+// Get one book
+// graphql
+// Copy
+// Edit
+// query {
+//   book(id: "1") {
+//     title
+//     author
+//   }
+// }
+// Add a new book
+// graphql
+// Copy
+// Edit
+// mutation {
+//   addBook(title: "Clean Code", author: "Robert C. Martin") {
+//     id
+//     title
+//   }
+// }
