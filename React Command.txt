@@ -1,0 +1,40 @@
+npm create vite@latest
+
+net start MongoDB
+
+for Tailwind installation:
+npm create vite@latest ./
+npm install tailwindcss @tailwindcss/vite
+
+put this in vite.config.js import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+//install gsap
+npm install gsap @gsap/react three @react-three/fiber @react-three/drei @react-three/postprocessing
+
+//for responsive 
+npm i react-responsive
+
+//CONVERTS GLTF FILES INTO JSX components
+cd to public folder containing gltf or glb file
+npx gltfjsx optimized-room.glb // name of glb file
+
+npx gltfjsx computer-optimized.glb -T (This reduce the size of computer model 
+
+npm install @emailjs/browser
+
+
+///to host in hostinger
+npm run build
+go to filemanager in hostin , and move dist files from vs code to there
+
+//Next Js
+npx create-next-app@latest
+
