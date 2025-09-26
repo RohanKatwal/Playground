@@ -21,3 +21,20 @@ pool.connect()
         console.error('Database connection error:', err.stack);
     });
 
+// CREATE
+app.post('/items', async (req, res) => {
+    const { name, description } = req.body;
+    try {
+        const result = await pool.query(
+            'INSERT INTO items (name, description) VALUES ($1, $2) RETURNING *',
+            [name, description]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
+});
