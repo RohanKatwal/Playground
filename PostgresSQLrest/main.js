@@ -35,6 +35,16 @@ app.post('/items', async (req, res) => {
     }
 });
 
+// READ ALL
+app.get('/items', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM items');
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.listen(3000, () => {
     console.log('Server running on port 3000');
 });
