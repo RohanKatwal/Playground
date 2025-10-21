@@ -1,4 +1,6 @@
 import React from 'react'
+import {Route, Routes} from 'react-router-dom'
+import ProductCard from './components/ProductCard'
 
 const App = () => {
 
@@ -20,15 +22,20 @@ const App = () => {
     }
   ]
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600 mb-4">Welcome to Stripe Payment Gateway</h1>
-      <p className="text-lg text-gray-700 mb-8">
-        This is a simple homepage to test TailwindCSS integration.
-      </p>
-      <button className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-        Test Button
-      </button>
-    </div>
+    <Routes>
+        <Route path='/' element={
+          <div className='min-h-screen bg-gray-200 flex flex-col items-center py-10'>
+            <h1 className='text-4xl font-bold text-gray-800 mb-10'>Stripe Store</h1>
+            <div className='grid grid-cols-3 gap-8'>
+                {
+                  product.map((product,index)=>(
+                    <ProductCard key={index} product={product}/>
+                  ))
+                }
+            </div>
+          </div>
+        }/>
+    </Routes>
   )
 }
 
