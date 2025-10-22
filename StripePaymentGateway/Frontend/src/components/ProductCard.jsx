@@ -1,9 +1,14 @@
 import React from 'react';
 
 export default function ProductCard({ product }) {
-    const handleBuy = () => {
+    const handleBuy = async() => {
         
-        console.log('Buy clicked:', product);
+        try {
+            const data=await axios.post('http://localhost:5000/create-checkout-session', { product });
+            window.location.href = data.url;
+        } catch (error) {
+            console.error('Error during purchase:', error);
+        }
     };
 
     return (
